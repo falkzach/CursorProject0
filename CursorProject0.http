@@ -1,0 +1,6 @@
+@CursorProject0_HostAddress = http://localhost:5094
+
+GET {{CursorProject0_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
