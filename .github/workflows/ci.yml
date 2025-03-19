@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # services:
+    #   postgres:
+    #     image: postgres:16-alpine
+    #     env:
+    #       POSTGRES_DB: appdb
+    #       POSTGRES_USER: postgres
+    #       POSTGRES_PASSWORD: postgres
+    #     ports:
+    #       - 5432:5432
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
+    #   redis:
+    #     image: redis:7-alpine
+    #     ports:
+    #       - 6379:6379
+    #     options: >-
+    #       --health-cmd "redis-cli ping"
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --no-restore
+
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+      env:
+        ConnectionStrings__DefaultConnection: "Host=localhost;Database=appdb;Username=postgres;Password=postgres"
+        Redis__ConnectionString: "localhost:6379" 
