@@ -2,7 +2,8 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CursorProject0.Core", "src\Core\CursorProject0.Core.csproj", "{6897EC61-B792-4BCF-ABD9-A3DA24D93365}"
+
+
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLogService", "src\ChatLogService\ChatLogService.csproj", "{7897EC61-B792-4BCF-ABD9-A3DA24D93366}"
 EndProject
