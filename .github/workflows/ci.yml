@@ -54,13 +54,17 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore src/CursorProject0/CursorProject0.csproj
+      run: dotnet restore
 
     - name: Build
-      run: dotnet build src/CursorProject0/CursorProject0.csproj --no-restore
+      run: dotnet build --no-restore
 
     - name: Test
-      run: dotnet test src/CursorProject0/CursorProject0.csproj --no-build --verbosity normal
+      run: |
+        for service in ChatLogService ChatModerationService EmojiLogService EmojiFavoritesService EmojiBombService; do
+          echo "Testing $service..."
+          dotnet test src/$service/$service.csproj --no-build --verbosity normal
+        done
       env:
         ASPNETCORE_ENVIRONMENT: Development
         Postgres__Host: localhost
