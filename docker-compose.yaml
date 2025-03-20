@@ -2,7 +2,7 @@ version: "3.8"
 services:
   api:
     build:
-      context: .
+      context: ./src/CursorProject0
       dockerfile: Dockerfile
     ports:
       - "8080:80"
@@ -10,9 +10,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Host=postgres;Database=appdb;Username=postgres;Password=postgres
       - Redis__ConnectionString=redis:6379
+      - NATS__ConnectionString=nats://nats:4222
     depends_on:
       - postgres
       - redis
+      - nats
 
   postgres:
     image: postgres:16-alpine
@@ -29,6 +31,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    profiles:
+      - deps
 
   redis:
     image: redis:7-alpine
@@ -41,7 +45,25 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    profiles:
+      - deps
+
+  nats:
+    image: nats:2.10-alpine
+    ports:
+      - "4222:4222"  # Client connections
+      - "8222:8222"  # HTTP management port
+    volumes:
+      - nats_data:/root/.local/share/nats
+    healthcheck:
+      test: ["CMD", "nats-server", "--ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    profiles:
+      - deps
 
 volumes:
   postgres_data:
   redis_data:
+  nats_data:
