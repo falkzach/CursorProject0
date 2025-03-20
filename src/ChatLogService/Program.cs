@@ -1,3 +1,5 @@
+using ChatLogService.Workers;
+using CursorProject0.Core.Connectivity.NATS;
 using CursorProject0.Core.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +16,11 @@ builder.Services.Configure<RedisOptions>(
     builder.Configuration.GetSection(RedisOptions.SectionName));
 builder.Services.Configure<NatsOptions>(
     builder.Configuration.GetSection(NatsOptions.SectionName));
+builder.Services.Configure<NatsTopicsOptions>(
+    builder.Configuration.GetSection(NatsTopicsOptions.SectionName));
+
+builder.Services.AddSingleton<INatsListener, NatsListener>();
+builder.Services.AddHostedService<ChatLogWorker>();
 
 var app = builder.Build();
 
