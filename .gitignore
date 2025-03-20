@@ -20,8 +20,6 @@ build/
 *.so
 
 # .NET build outputs
-bin/
-obj/
 **/bin/
 **/obj/
 
@@ -56,4 +54,8 @@ htmlcov/
 # Temporary files
 *.tmp
 *.temp
-.cache/ 
+.cache/
+
+# Docker volumes
+.docker/
+docker-volumes/ 
