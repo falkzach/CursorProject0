@@ -1,4 +1,4 @@
-namespace CursorProject0.Options;
+namespace CursorProject0.Core.Options;
 
 public class PostgresOptions
 {

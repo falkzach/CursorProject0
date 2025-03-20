@@ -1,6 +1,6 @@
 # CursorProject0
 
-A .NET 8 Web API project with PostgreSQL, Redis, and NATS integration.
+A microservices-based .NET 8 application with PostgreSQL, Redis, and NATS integration.
 
 ## Prerequisites
 
@@ -14,19 +14,31 @@ A .NET 8 Web API project with PostgreSQL, Redis, and NATS integration.
 docker compose --profile deps up -d
 ```
 
-2. Start the API:
+2. Start all services:
 ```bash
 docker compose up -d
 ```
 
-The API will be available at `http://localhost:8080`
+The services will be available at:
+- ChatLogService: `http://localhost:8081`
+- ChatModerationService: `http://localhost:8082`
+- EmojiLogService: `http://localhost:8083`
+- EmojiFavoritesService: `http://localhost:8084`
+- EmojiBombService: `http://localhost:8085`
 
 ## Services
 
-- API: .NET 8 Web API
-- PostgreSQL: Database
-- Redis: Caching
-- NATS: Message Broker
+### Core Services
+- ChatLogService: Logs chat messages and events
+- ChatModerationService: Handles chat moderation and filtering
+- EmojiLogService: Tracks emoji usage and statistics
+- EmojiFavoritesService: Manages user emoji favorites
+- EmojiBombService: Handles emoji reactions and effects
+
+### Infrastructure
+- PostgreSQL: Database for persistent storage
+- Redis: Caching and real-time data
+- NATS: Message broker for inter-service communication
 
 ## NATS Examples
 
@@ -65,12 +77,16 @@ docker compose exec nats nats-sub -q mygroup test.subject
 ### Running Tests
 
 ```bash
-# Run tests locally
-dotnet test src/CursorProject0/CursorProject0.csproj
+# Run tests for all services
+dotnet test src/ChatLogService/ChatLogService.csproj
+dotnet test src/ChatModerationService/ChatModerationService.csproj
+dotnet test src/EmojiLogService/EmojiLogService.csproj
+dotnet test src/EmojiFavoritesService/EmojiFavoritesService.csproj
+dotnet test src/EmojiBombService/EmojiBombService.csproj
 
 # Run tests in CI environment
 docker compose --profile deps up -d
-dotnet test src/CursorProject0/CursorProject0.csproj
+dotnet test src/**/*.csproj
 ```
 
 ### Project Structure
@@ -78,20 +94,27 @@ dotnet test src/CursorProject0/CursorProject0.csproj
 ```
 CursorProject0/
 ├── src/
-│   └── CursorProject0/           # Main API project
-│       ├── Options/              # Configuration options
-│       ├── Program.cs
-│       └── appsettings.json
+│   ├── Core/                      # Shared library
+│   │   ├── Options/              # Common configuration options
+│   │   │   ├── PostgresOptions.cs
+│   │   │   ├── RedisOptions.cs
+│   │   │   └── NatsOptions.cs
+│   │   └── Models/               # Shared data models
+│   ├── ChatLogService/           # Chat logging service
+│   ├── ChatModerationService/    # Chat moderation service
+│   ├── EmojiLogService/          # Emoji logging service
+│   ├── EmojiFavoritesService/    # Emoji favorites service
+│   └── EmojiBombService/         # Emoji bomb service
 ├── docker-compose.yaml
 └── .gitignore
 ```
 
 ## Configuration
 
-The application uses the following configuration sections:
+Each service uses the following configuration sections from the Core library:
 
 - `Postgres`: Database connection settings
 - `Redis`: Redis connection and timeout settings
 - `NATS`: Message broker connection and behavior settings
 
-See `appsettings.Development.json` for development configuration values. 
+See `appsettings.Development.json` in each service directory for development configuration values. 
