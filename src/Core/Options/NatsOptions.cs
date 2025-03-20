@@ -4,7 +4,7 @@ public class NatsOptions
 {
     public const string SectionName = "NATS";
     
-    public string ConnectionString { get; set; } = string.Empty;
+    public string ConnectionString { get; set; } = "nats://localhost:4222";
     public string? Username { get; set; }
     public string? Password { get; set; }
     public string? Token { get; set; }
