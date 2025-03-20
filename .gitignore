@@ -20,8 +20,6 @@ build/
 *.so
 
 # .NET build outputs
-src/**/bin/
-src/**/obj/
 **/bin/
 **/obj/
 
