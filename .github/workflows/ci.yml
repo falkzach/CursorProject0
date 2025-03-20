@@ -10,30 +10,40 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # services:
-    #   postgres:
-    #     image: postgres:16-alpine
-    #     env:
-    #       POSTGRES_DB: appdb
-    #       POSTGRES_USER: postgres
-    #       POSTGRES_PASSWORD: postgres
-    #     ports:
-    #       - 5432:5432
-    #     options: >-
-    #       --health-cmd pg_isready
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: appdb
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
-    #   redis:
-    #     image: redis:7-alpine
-    #     ports:
-    #       - 6379:6379
-    #     options: >-
-    #       --health-cmd "redis-cli ping"
-    #       --health-interval 10s
-    #       --health-timeout 5s
-    #       --health-retries 5
+      # redis:
+      #   image: redis:7-alpine
+      #   ports:
+      #     - 6379:6379
+      #   options: >-
+      #     --health-cmd "redis-cli ping"
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
+
+      # nats:
+      #   image: nats:2.10-alpine
+      #   ports:
+      #     - 4222:4222
+      #   options: >-
+      #     --health-cmd "nats-server --ping"
+      #     --health-interval 10s
+      #     --health-timeout 5s
+      #     --health-retries 5
 
     steps:
     - uses: actions/checkout@v4
@@ -44,13 +54,19 @@ jobs:
         dotnet-version: '8.0.x'
 
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src/CursorProject0/CursorProject0.csproj
 
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build src/CursorProject0/CursorProject0.csproj --no-restore
 
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test src/CursorProject0/CursorProject0.csproj --no-build --verbosity normal
       env:
-        ConnectionStrings__DefaultConnection: "Host=localhost;Database=appdb;Username=postgres;Password=postgres"
-        Redis__ConnectionString: "localhost:6379" 
+        ASPNETCORE_ENVIRONMENT: Development
+        Postgres__Host: localhost
+        Postgres__Database: appdb
+        Postgres__Username: postgres
+        Postgres__Password: postgres
+        Postgres__Port: 5432
+        Redis__ConnectionString: localhost:6379
+        NATS__ConnectionString: nats://localhost:4222 
