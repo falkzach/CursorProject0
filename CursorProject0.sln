@@ -2,9 +2,6 @@
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-
-
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLogService", "src\ChatLogService\ChatLogService.csproj", "{7897EC61-B792-4BCF-ABD9-A3DA24D93366}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatModerationService", "src\ChatModerationService\ChatModerationService.csproj", "{8897EC61-B792-4BCF-ABD9-A3DA24D93367}"
@@ -14,6 +11,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmojiFavoritesService", "src\EmojiFavoritesService\EmojiFavoritesService.csproj", "{A897EC61-B792-4BCF-ABD9-A3DA24D93369}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmojiBombService", "src\EmojiBombService\EmojiBombService.csproj", "{B897EC61-B792-4BCF-ABD9-A3DA24D93370}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{07F4C4E3-1AEF-4D42-A468-9E05AC9FA2A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatUI", "src\ChatUI\ChatUI.csproj", "{A15C2865-0997-4F20-82BE-CB6C4CC82FEC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,5 +49,12 @@ Global
 		{B897EC61-B792-4BCF-ABD9-A3DA24D93370}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B897EC61-B792-4BCF-ABD9-A3DA24D93370}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B897EC61-B792-4BCF-ABD9-A3DA24D93370}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15C2865-0997-4F20-82BE-CB6C4CC82FEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15C2865-0997-4F20-82BE-CB6C4CC82FEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15C2865-0997-4F20-82BE-CB6C4CC82FEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15C2865-0997-4F20-82BE-CB6C4CC82FEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A15C2865-0997-4F20-82BE-CB6C4CC82FEC} = {07F4C4E3-1AEF-4D42-A468-9E05AC9FA2A1}
 	EndGlobalSection
 EndGlobal
