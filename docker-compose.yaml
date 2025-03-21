@@ -1,5 +1,18 @@
 version: "3.8"
 services:
+  chat-ui:
+    build:
+      context: .
+      dockerfile: src/ChatUI/Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - chat-log
+      - chat-moderation
+      - emoji-log
+      - emoji-favorites
+      - emoji-bomb
+
   chat-log:
     build:
       context: ./src/ChatLogService
